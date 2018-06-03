@@ -10,9 +10,9 @@ import retrofit2.http.Query;
 
 public interface WebService {
 
-    @GET("/movie/{filter}")
+    @GET("movie/{filter}")
     Call<MovieResult> getMoviesByPreference(@Path("filter") String filter, @Query("api_key") String apiKey);
 
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}")
     Call<Movie> getMovieDetails(@Path("movie_id") int movieId);
 }

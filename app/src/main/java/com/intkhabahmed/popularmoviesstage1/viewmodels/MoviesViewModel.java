@@ -8,14 +8,10 @@ import com.intkhabahmed.popularmoviesstage1.model.MovieResult;
 
 public class MoviesViewModel extends ViewModel {
     private LiveData<MovieResult> results;
-    private MovieRepository movieRepository;
+    MovieRepository movieRepository = new MovieRepository();
 
-    public MoviesViewModel(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
-
-    public void init(String filter, String apiKey) {
-        if(results != null) {
+    MoviesViewModel(String filter, String apiKey) {
+        if (results != null) {
             return;
         }
         results = movieRepository.getMovies(filter, apiKey);

@@ -17,4 +17,20 @@ public class MovieResult {
 
     @SerializedName("results")
     private List<Movie> movies;
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public int getTotalResults() {
+        return totalResults;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
 }

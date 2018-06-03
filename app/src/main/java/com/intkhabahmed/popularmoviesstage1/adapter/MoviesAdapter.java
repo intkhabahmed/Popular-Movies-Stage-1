@@ -1,5 +1,6 @@
 package com.intkhabahmed.popularmoviesstage1.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,34 +8,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.intkhabahmed.popularmoviesstage1.R;
 import com.intkhabahmed.popularmoviesstage1.model.Movie;
+import com.intkhabahmed.popularmoviesstage1.utils.AppConstants;
 
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter {
+public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
     private OnItemClick mOnItemClick;
     private List<Movie> movies;
+    private Context mContext;
 
-    public MoviesAdapter(OnItemClick onItemClick) {
+    public MoviesAdapter(Context context, OnItemClick onItemClick) {
         this.mOnItemClick = onItemClick;
+        mContext = context;
     }
 
-    interface OnItemClick {
+    public interface OnItemClick {
         void onClick(int position);
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item_layout, parent, false);
+    public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_item_layout, parent, false);
         return new MoviesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
+        String imageRelativePath = movies.get(position).getPosterUrl();
+        String imageFullPath = AppConstants.BASE_IMAGE_URL + imageRelativePath;
+        Glide.with(mContext).asDrawable().load(imageFullPath).into(holder.movieThumbnail);
     }
 
     @Override
@@ -46,8 +53,7 @@ public class MoviesAdapter extends RecyclerView.Adapter {
     }
 
     class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        private ImageView movieThumbnail;
+        ImageView movieThumbnail;
 
         MoviesViewHolder(View itemView) {
             super(itemView);
@@ -61,7 +67,7 @@ public class MoviesAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setMovies (List<Movie> movies) {
+    public void setMovies(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }

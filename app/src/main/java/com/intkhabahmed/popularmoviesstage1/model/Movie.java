@@ -1,12 +1,19 @@
 package com.intkhabahmed.popularmoviesstage1.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Movie {
+    @SerializedName("original_title")
     private String originalTitle;
+    @SerializedName("release_date")
     private Date releaseDate;
+    @SerializedName("poster_path")
     private String posterUrl;
+    @SerializedName("vote_average")
     private float voteAverage;
+    @SerializedName("overview")
     private String overview;
 
     public Movie(String originalTitle, Date releaseDate, String posterUrl, float voteAverage, String overview) {
