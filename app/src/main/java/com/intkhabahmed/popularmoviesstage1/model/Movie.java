@@ -2,9 +2,10 @@ package com.intkhabahmed.popularmoviesstage1.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Movie {
+public class Movie implements Serializable{
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("release_date")
@@ -15,13 +16,16 @@ public class Movie {
     private float voteAverage;
     @SerializedName("overview")
     private String overview;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
 
-    public Movie(String originalTitle, Date releaseDate, String posterUrl, float voteAverage, String overview) {
+    public Movie(String originalTitle, Date releaseDate, String posterUrl, float voteAverage, String overview, String backdropPath) {
         this.originalTitle = originalTitle;
         this.releaseDate = releaseDate;
         this.posterUrl = posterUrl;
         this.voteAverage = voteAverage;
         this.overview = overview;
+        this.backdropPath = backdropPath;
     }
 
     public String getOriginalTitle() {
@@ -62,5 +66,13 @@ public class Movie {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 }

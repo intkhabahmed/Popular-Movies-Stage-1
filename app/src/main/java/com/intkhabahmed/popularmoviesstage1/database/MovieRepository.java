@@ -29,7 +29,6 @@ public class MovieRepository {
                 .enqueue(new Callback<MovieResult>() {
                     @Override
                     public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
-                        Log.v(MovieRepository.class.getName(), "response code: "+response.raw().request().url());
                         result.setValue(response.body());
                     }
 

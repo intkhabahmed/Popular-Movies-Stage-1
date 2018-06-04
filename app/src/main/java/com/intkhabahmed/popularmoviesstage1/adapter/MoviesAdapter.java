@@ -27,7 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public interface OnItemClick {
-        void onClick(int position);
+        void onClick(int position, Movie movie);
     }
 
     @NonNull
@@ -40,7 +40,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
         String imageRelativePath = movies.get(position).getPosterUrl();
-        String imageFullPath = AppConstants.BASE_IMAGE_URL + imageRelativePath;
+        String imageFullPath = AppConstants.BASE_IMAGE_URL_185 + imageRelativePath;
         Glide.with(mContext).asDrawable().load(imageFullPath).into(holder.movieThumbnail);
     }
 
@@ -63,7 +63,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         @Override
         public void onClick(View v) {
-            mOnItemClick.onClick(getAdapterPosition());
+            mOnItemClick.onClick(getAdapterPosition(), movies.get(getAdapterPosition()));
         }
     }
 

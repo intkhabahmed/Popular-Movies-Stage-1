@@ -1,9 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.DetailActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.DetailActivity">
 
-</android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/backdrop_iv"
+                android:layout_width="0dp"
+                android:layout_height="320dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/movie_backdrop_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/original_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backdrop_iv"
+                tools:text="@sample/tools:full_names" />
+
+            <TextView
+                android:id="@+id/release_date_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/released_on"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintStart_toStartOf="@+id/original_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/original_title_tv" />
+
+            <TextView
+                android:id="@+id/release_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintBaseline_toBaselineOf="@+id/release_date_label_tv"
+                app:layout_constraintStart_toEndOf="@+id/release_date_label_tv"
+                tools:text="@sample/tools:date/ddmmyy" />
+
+            <TextView
+                android:id="@+id/vote_average_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/rating"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintEnd_toStartOf="@+id/vote_average_tv"
+                app:layout_constraintTop_toTopOf="@+id/release_date_label_tv" />
+
+            <TextView
+                android:id="@+id/vote_average_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintBaseline_toBaselineOf="@+id/vote_average_label_tv"
+                app:layout_constraintEnd_toEndOf="@+id/original_title_tv"
+                tools:text="8/10" />
+
+            <TextView
+                android:id="@+id/plot_synopsis_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toEndOf="@+id/vote_average_tv"
+                app:layout_constraintStart_toStartOf="@+id/release_date_label_tv"
+                app:layout_constraintTop_toBottomOf="@+id/release_date_label_tv"
+                tools:text="@sample/tools:lorem/random" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>
