@@ -8,7 +8,6 @@ public class MoviesViewModelFactory extends ViewModelProvider.NewInstanceFactory
 
     private String filter;
     private String apiKey;
-    private boolean isSortCriteriaChanged;
 
     public MoviesViewModelFactory(String filter, String apiKey) {
         this.filter = filter;

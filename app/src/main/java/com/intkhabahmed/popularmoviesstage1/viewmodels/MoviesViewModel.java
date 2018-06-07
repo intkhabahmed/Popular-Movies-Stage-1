@@ -8,7 +8,6 @@ import com.intkhabahmed.popularmoviesstage1.model.MovieResult;
 
 public class MoviesViewModel extends ViewModel {
     private LiveData<MovieResult> results;
-    private MovieRepository movieRepository = new MovieRepository();
 
     MoviesViewModel(String filter, String apiKey) {
         if (results != null) {
@@ -18,11 +17,7 @@ public class MoviesViewModel extends ViewModel {
     }
 
     public void loadFromNetwork(String filter, String apiKey) {
-        results = movieRepository.getMovies(filter, apiKey);
-    }
-
-    public void setResults(LiveData<MovieResult> results) {
-        this.results = results;
+        results = MovieRepository.getInstance().getMovies(filter, apiKey);
     }
 
     public LiveData<MovieResult> getResults() {

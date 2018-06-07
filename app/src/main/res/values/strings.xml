@@ -10,4 +10,6 @@
     <string name="movie_backdrop_desc">Movie Backdrop poster</string>
     <string name="released_on">Released On</string>
     <string name="rating">Rating</string>
+    <string name="no_network_message">No Internet Connection!! Tap to retry.</string>
+    <string name="retry_loading_button">Retry button to load movies</string>
 </resources>

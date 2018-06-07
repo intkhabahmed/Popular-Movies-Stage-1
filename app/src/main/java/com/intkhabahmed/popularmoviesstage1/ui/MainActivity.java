@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,8 +23,11 @@ import com.intkhabahmed.popularmoviesstage1.databinding.ActivityMainBinding;
 import com.intkhabahmed.popularmoviesstage1.model.Movie;
 import com.intkhabahmed.popularmoviesstage1.model.MovieResult;
 import com.intkhabahmed.popularmoviesstage1.utils.AppConstants;
+import com.intkhabahmed.popularmoviesstage1.utils.NetworkUtils;
 import com.intkhabahmed.popularmoviesstage1.viewmodels.MoviesViewModel;
 import com.intkhabahmed.popularmoviesstage1.viewmodels.MoviesViewModelFactory;
+
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnItemClick {
 
@@ -34,32 +38,76 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setupUI();
+        performLoading(false);
+    }
+
+    private void performLoading(final boolean isCriteriaChanged) {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                final boolean isConnected = NetworkUtils.getConnectivityStatus(MainActivity.this);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isConnected) {
+                            mMoviesAdapter.setMovies(null);
+                            mMainBinding.noConnectionLl.setVisibility(View.VISIBLE);
+                            mMainBinding.loadingPb.setVisibility(View.INVISIBLE);
+                            return;
+                        }
+                        setupViewModel(isCriteriaChanged);
+                    }
+                });
+            }
+        });
+    }
+
+    private void setupUI() {
         RecyclerView recyclerView = mMainBinding.moviesRv;
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        final int spanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 4 : 2;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, spanCount);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.bottom = 10;
-                if (parent.getChildLayoutPosition(view) % 2 != 0) {
-                    outRect.left = 10;
+                outRect.bottom = 16;
+                int position = parent.getChildLayoutPosition(view);
+                if (spanCount == 2) {
+                    if (position % 2 != 0) {
+                        outRect.left = 16;
+                    }
+                } else {
+                    if (position % 2 == 0) {
+                        outRect.left = 16;
+                        outRect.right = 16;
+                    }
+                    if (position % 4 == 0) {
+                        outRect.left = 0;
+                    }
                 }
             }
         });
         mMoviesAdapter = new MoviesAdapter(this, this);
         recyclerView.setAdapter(mMoviesAdapter);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String sortCriteria = sharedPreferences.getString(getString(R.string.sort_criteria), AppConstants.POPULAR_MOVIES);
-        setupViewModel(sortCriteria, false);
+        mMainBinding.retryIb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performLoading(true);
+            }
+        });
     }
 
-    private void setupViewModel(String sortCriteria, boolean isMovieCriteriaChanged) {
+    private void setupViewModel(boolean isMovieCriteriaChanged) {
+        mMainBinding.noConnectionLl.setVisibility(View.INVISIBLE);
         mMainBinding.loadingPb.setVisibility(View.VISIBLE);
-        MoviesViewModelFactory factory = new MoviesViewModelFactory(sortCriteria, AppConstants.API_KEY);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortCriteria = sharedPreferences.getString(getString(R.string.sort_criteria), AppConstants.POPULAR_MOVIES);
+        MoviesViewModelFactory factory = new MoviesViewModelFactory(sortCriteria, getString(R.string.api_key));
         MoviesViewModel moviesViewModel = ViewModelProviders.of(this, factory).get(MoviesViewModel.class);
         if (isMovieCriteriaChanged) {
-            moviesViewModel.loadFromNetwork(sortCriteria, AppConstants.API_KEY);
+            moviesViewModel.loadFromNetwork(sortCriteria, getString(R.string.api_key));
         }
         moviesViewModel.getResults().observe(this, new Observer<MovieResult>() {
             @Override
@@ -105,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
         editor.putString(getString(R.string.sort_criteria), sortCriteria);
         editor.putInt(getString(R.string.sort_criteria_id), order);
         editor.apply();
-        setupViewModel(sortCriteria, true);
+        performLoading(true);
     }
 
     private String getSortCriteria(int order) {

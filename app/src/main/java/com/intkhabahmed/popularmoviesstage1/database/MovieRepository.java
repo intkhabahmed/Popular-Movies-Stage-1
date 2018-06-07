@@ -9,20 +9,22 @@ import com.intkhabahmed.popularmoviesstage1.model.MovieResult;
 import com.intkhabahmed.popularmoviesstage1.networking.ApiClient;
 import com.intkhabahmed.popularmoviesstage1.networking.WebService;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@Singleton
+
 public class MovieRepository {
-    @Inject
-    public MovieRepository() {
+    private static MovieRepository mMovieRepository;
+
+    public static MovieRepository getInstance() {
+        if (mMovieRepository == null) {
+            mMovieRepository = new MovieRepository();
+        }
+        return mMovieRepository;
     }
 
-    public LiveData<MovieResult> getMovies (String filter, String apiKey) {
+    public LiveData<MovieResult> getMovies(String filter, String apiKey) {
         final MutableLiveData<MovieResult> result = new MutableLiveData<>();
         ApiClient.getInstance().create(WebService.class)
                 .getMoviesByPreference(filter, apiKey)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="medium_spacing">8dp</dimen>
+    <dimen name="grid_image_height">296dp</dimen>
+    <dimen name="detail_image_height">320dp</dimen>
+    <dimen name="large_spacing">16dp</dimen>
+    <dimen name="detail_image_width">300dp</dimen>
+    <dimen name="xlarge_spacing">24dp</dimen>
+    <dimen name="medium_icon_size">56dp</dimen>
+    <dimen name="large_icon_size">72dp</dimen>
+</resources>
