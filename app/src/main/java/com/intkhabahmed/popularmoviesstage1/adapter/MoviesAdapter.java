@@ -28,7 +28,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public interface OnItemClick {
-        void onClick(int position, Movie movie);
+        void onClick(View view, Movie movie);
     }
 
     @NonNull
@@ -66,7 +66,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         @Override
         public void onClick(View v) {
-            mOnItemClick.onClick(getAdapterPosition(), movies.get(getAdapterPosition()));
+            mOnItemClick.onClick(v, movies.get(getAdapterPosition()));
         }
     }
 

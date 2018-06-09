@@ -1,5 +1,6 @@
 package com.intkhabahmed.popularmoviesstage1.ui;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -7,9 +8,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -168,11 +171,17 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     }
 
     @Override
-    public void onClick(int position, Movie movie) {
+    public void onClick(View view, Movie movie) {
         Intent intent = new Intent(this, DetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(getString(R.string.movie_object), movie);
         intent.putExtras(bundle);
+        if (Build.VERSION.SDK_INT > 21) {
+            Bundle sharedBundle = ActivityOptions.makeSceneTransitionAnimation(this, view,
+                    view.getTransitionName()).toBundle();
+            startActivity(intent, sharedBundle);
+            return;
+        }
         startActivity(intent);
     }
 }

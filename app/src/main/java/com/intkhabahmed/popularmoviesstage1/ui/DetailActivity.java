@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
@@ -43,11 +45,15 @@ public class DetailActivity extends AppCompatActivity {
                 .error(R.drawable.error_placeholder))
                 .load(AppConstants.BASE_IMAGE_URL_185 + movie.getPosterUrl()).into(mDetailBinding.movieThumbnailIv);
         mDetailBinding.originalTitleTv.setText(movie.getOriginalTitle());
+        mDetailBinding.originalTitleTv.startAnimation(AnimationUtils.loadAnimation(this, R.anim.enter_from_bottom));
+        mDetailBinding.plotSynopsisTv.startAnimation(AnimationUtils.loadAnimation(this, R.anim.enter_from_bottom));
         mDetailBinding.plotSynopsisTv.setText(movie.getOverview());
         Drawable textDrawable = TextDrawable.builder()
                 .buildRound(String.valueOf(movie.getVoteAverage()), ContextCompat.getColor(this, R.color.colorPrimaryDark));
         mDetailBinding.voteAverageIv.setImageDrawable(textDrawable);
+        mDetailBinding.voteAverageIv.startAnimation(AnimationUtils.loadAnimation(this, R.anim.enter_from_right));
         mDetailBinding.releaseDateTv.setText(DateUtils.getFormattedDate(movie.getReleaseDate()));
+        mDetailBinding.releaseDateTv.startAnimation(AnimationUtils.loadAnimation(this, R.anim.enter_from_right));
     }
 
     @Override

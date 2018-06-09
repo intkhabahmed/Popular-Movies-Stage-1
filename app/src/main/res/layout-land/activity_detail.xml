@@ -97,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/released_on_icon_iv"
-                android:layout_width="@dimen/small_icon_size"
-                android:layout_height="@dimen/small_icon_size"
+                android:layout_width="@dimen/very_small_icon_size"
+                android:layout_height="@dimen/very_small_icon_size"
                 android:contentDescription="@string/released_on"
                 app:layout_constraintBottom_toTopOf="@+id/release_date_label_tv"
                 app:layout_constraintStart_toStartOf="@+id/original_title_tv"
@@ -108,8 +108,8 @@
 
             <ImageView
                 android:id="@+id/rating_icon_iv"
-                android:layout_width="@dimen/small_icon_size"
-                android:layout_height="@dimen/small_icon_size"
+                android:layout_width="@dimen/very_small_icon_size"
+                android:layout_height="@dimen/very_small_icon_size"
                 android:contentDescription="@string/rating"
                 app:layout_constraintBottom_toTopOf="@+id/vote_average_label_tv"
                 app:layout_constraintStart_toStartOf="@+id/released_on_icon_iv"
@@ -127,6 +127,7 @@
                 android:contentDescription="@string/movie_thumbnail_desc"
                 android:padding="@dimen/thumbnail_border_padding"
                 android:scaleType="centerCrop"
+                android:transitionName="@string/movie_thumbnail_desc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
