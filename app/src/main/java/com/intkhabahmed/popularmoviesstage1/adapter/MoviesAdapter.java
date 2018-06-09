@@ -42,7 +42,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
         String imageRelativePath = movies.get(position).getPosterUrl();
         String imageFullPath = AppConstants.BASE_IMAGE_URL_185 + imageRelativePath;
-        Glide.with(mContext).asDrawable().apply(new RequestOptions().placeholder(R.drawable.placeholder_movieimage))
+        Glide.with(mContext).asDrawable().apply(new RequestOptions().placeholder(R.drawable.placeholder_movieimage)
+                .error(R.drawable.error_placeholder))
                 .load(imageFullPath).into(holder.movieThumbnail);
     }
 

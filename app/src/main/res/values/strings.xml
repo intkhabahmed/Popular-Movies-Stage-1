@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies Stage 1</string>
+    <string name="app_name">Cine Prime</string>
     <string name="movie_thumbnail_desc">movie poster thumbnail</string>
     <string name="filter">Filter</string>
     <string name="popular_movies">Popular Movies</string>
@@ -12,4 +12,5 @@
     <string name="rating">Rating</string>
     <string name="no_network_message">No Internet Connection!! Tap to retry.</string>
     <string name="retry_loading_button">Retry button to load movies</string>
+    <string name="overview">Overview</string>
 </resources>
