@@ -15,7 +15,7 @@
             <ImageView
                 android:id="@+id/backdrop_iv"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/detail_image_height"
+                android:layout_height="@dimen/grid_image_height"
                 android:contentDescription="@string/movie_backdrop_desc"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
